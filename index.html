@@ -76,6 +76,9 @@
     .card-meta { display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 10px 3px 0; }
     .card-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; font-weight: 800; }
     .card-sub { color: #b29c9f; font-size: 10px; white-space: nowrap; }
+    .card-meta.has-date { display: block; }
+    .card-meta.has-date .card-title { display: block; }
+    .card-meta.has-date .card-sub { display: block; margin-top: 4px; font-size: 9px; }
     .empty { grid-column: 1 / -1; text-align: center; padding: 58px 10px; color: #a58e92; }
     .empty .emoji { font-size: 36px; margin-bottom: 9px; }
     .footer { border-top: 1px solid var(--line); padding: 22px 0 calc(24px + env(safe-area-inset-bottom)); text-align: center; color: #b49da0; font-size: 11px; line-height: 1.8; }
@@ -221,9 +224,11 @@
       { id: 'p12', title: '小岛慢慢游', category: '风景', image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?fm=jpg&fit=max&w=2400&q=95' }
     ];
     const LIKE_KEY = 'longxiaodai-likes-v1';
+    const DATE_KEY = 'longxiaodai-wallpaper-dates-v1';
     const IMAGE_EXTENSIONS = ['png', 'jpg', 'jpeg', 'webp', 'avif', 'gif', 'bmp'];
     let localWallpapers = [];
     let likes = new Set(readJSON(LIKE_KEY, []));
+    let firstSeenDates = readDateRecord();
     let activeCategory = '全部';
     let favoritesMode = false;
     let toastTimer;
@@ -234,6 +239,33 @@
     const allWallpapers = () => [...localWallpapers, ...seedWallpapers];
     function readJSON(key, fallback) { try { const value = JSON.parse(localStorage.getItem(key)); return Array.isArray(value) ? value : fallback; } catch { return fallback; } }
     function saveLocal() { try { localStorage.setItem(LIKE_KEY, JSON.stringify([...likes])); } catch {} }
+    function readDateRecord() { try { const value = JSON.parse(localStorage.getItem(DATE_KEY)); return value && typeof value === 'object' && !Array.isArray(value) ? value : {}; } catch { return {}; } }
+    function getFirstSeenDate(fileName) {
+      const key = fileName.toLowerCase();
+      if (!firstSeenDates[key]) {
+        const now = new Date();
+        firstSeenDates[key] = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+        try { localStorage.setItem(DATE_KEY, JSON.stringify(firstSeenDates)); } catch {}
+      }
+      const [year, month, day] = firstSeenDates[key].split('-');
+      return `${year}年${month}月${day}日`;
+    }
+    function formatFileDate(value) {
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return '';
+      return `${date.getFullYear()}年${String(date.getMonth() + 1).padStart(2, '0')}月${String(date.getDate()).padStart(2, '0')}日`;
+    }
+    async function getWallpaperDate(file) {
+      try {
+        const response = await fetch(file.url, { method: 'HEAD', cache: 'no-store' });
+        const lastModified = response.headers.get('Last-Modified');
+        if (response.ok && lastModified) {
+          const date = formatFileDate(lastModified);
+          if (date) return date;
+        }
+      } catch {}
+      return getFirstSeenDate(file.fileName);
+    }
     function esc(value) { return String(value).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c])); }
     function render() {
       const items = allWallpapers();
@@ -247,7 +279,7 @@
         gallery.innerHTML = `<div class="empty"><div class="emoji">${favoritesMode ? '♡' : '🌷'}</div><strong>${favoritesMode ? '还没有收藏喜欢的壁纸' : '没有找到这张小可爱'}</strong><div style="margin-top:7px;font-size:12px">${favoritesMode ? '点点卡片上的小爱心，把喜欢的留起来吧。' : '换个关键词试试看吧。'}</div></div>`;
         return;
       }
-      gallery.innerHTML = visible.map(item => `<article class="card" data-open="${esc(item.id)}" tabindex="0" aria-label="查看${esc(item.title)}"><div class="thumb"><img src="${esc(item.image)}" alt="${esc(item.title)}" loading="lazy" /><span class="tag">${esc(item.category)}</span><button class="heart ${likes.has(item.id) ? 'liked' : ''}" type="button" data-like="${esc(item.id)}" aria-label="${likes.has(item.id) ? '取消收藏' : '收藏'}">${likes.has(item.id) ? '♥' : '♡'}</button></div><div class="card-meta"><span class="card-title">${esc(item.title)}</span><span class="card-sub">点开看看 ↗</span></div></article>`).join('');
+      gallery.innerHTML = visible.map(item => `<article class="card" data-open="${esc(item.id)}" tabindex="0" aria-label="查看${esc(item.title)}"><div class="thumb"><img src="${esc(item.image)}" alt="${esc(item.title)}" loading="lazy" /><span class="tag">${esc(item.category)}</span><button class="heart ${likes.has(item.id) ? 'liked' : ''}" type="button" data-like="${esc(item.id)}" aria-label="${likes.has(item.id) ? '取消收藏' : '收藏'}">${likes.has(item.id) ? '♥' : '♡'}</button></div><div class="card-meta ${item.addedDate ? 'has-date' : ''}"><span class="card-title">${esc(item.title)}</span><span class="card-sub">${item.addedDate ? esc(item.addedDate) : '点开看看 ↗'}</span></div></article>`).join('');
     }
     function showToast(message) { const el = document.getElementById('toast'); el.textContent = message; el.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove('show'), 2200); }
     function openViewer(id) {
@@ -336,10 +368,15 @@
         });
     }
     render();
-    discoverFolderWallpapers().then(wallpapers => { localWallpapers = wallpapers; render(); });
+    discoverFolderWallpapers().then(async wallpapers => {
+      localWallpapers = await Promise.all(wallpapers.map(async wallpaper => ({ ...wallpaper, addedDate: await getWallpaperDate(wallpaper) })));
+      render();
+    });
   </script>
 </body>
 </html>
+
+
 
 
 
