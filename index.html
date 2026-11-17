@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#fff8f3" />
+  <meta name="description" content="龙小呆壁纸收藏馆，把软乎乎的可爱和一点点好心情装进你的手机。" />
+  <title>龙小呆 · 壁纸收藏馆</title>
+  <style>
+    :root {
+      --cream: #fff8f3;
+      --paper: #fffdfb;
+      --pink: #ee8ca9;
+      --pink-dark: #d96c91;
+      --pink-pale: #fde7ed;
+      --ink: #493b3e;
+      --muted: #9a8589;
+      --line: #f4e7e5;
+      --shadow: 0 12px 35px rgba(117, 77, 83, .09);
+      --round: 24px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; min-width: 320px; color: var(--ink); background:
+        radial-gradient(ellipse at 10% 0%, rgba(255, 224, 232, .56), transparent 31rem),
+        var(--cream);
+      font-family: "Nunito", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+    }
+    button, input { font: inherit; }
+    button { color: inherit; }
+    .shell { width: min(1160px, calc(100% - 36px)); margin: 0 auto; }
+    .topbar { height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+    .brand { display: flex; align-items: center; gap: 11px; color: inherit; text-decoration: none; }
+    .brand-mark { display: grid; place-items: center; width: 43px; height: 43px; border-radius: 16px; background: #ffe3eb; font-size: 23px; transform: rotate(-5deg); }
+    .brand-name { font-weight: 850; letter-spacing: .02em; font-size: 17px; }
+    .brand-sub { display: block; font-size: 10px; font-weight: 600; letter-spacing: .17em; color: #b59298; margin-top: 2px; }
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+    .soft-button, .primary-button { border: 0; cursor: pointer; border-radius: 999px; transition: transform .18s ease, box-shadow .18s ease, background .18s ease; }
+    .soft-button { background: rgba(255,255,255,.78); border: 1px solid var(--line); padding: 10px 15px; color: #775e64; font-size: 13px; font-weight: 750; }
+    .soft-button:hover, .primary-button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(217,108,145,.18); }
+    .primary-button { background: var(--pink); color: white; padding: 11px 18px; font-weight: 800; font-size: 13px; box-shadow: 0 7px 18px rgba(217,108,145,.18); }
+    .hero { min-height: 285px; padding: 44px 46px; border-radius: 32px; background: linear-gradient(112deg, #ffe9ed 0%, #fff0e7 56%, #fff8e9 100%); position: relative; overflow: hidden; display: flex; align-items: center; }
+    .hero::before, .hero::after { content: ""; position: absolute; border-radius: 50%; pointer-events: none; }
+    .hero::before { width: 250px; height: 250px; right: 12%; top: -145px; background: rgba(255,255,255,.35); }
+    .hero::after { width: 205px; height: 205px; right: -35px; bottom: -123px; background: rgba(255,255,255,.4); }
+    .hero-copy { max-width: 570px; position: relative; z-index: 1; }
+    .eyebrow { display: inline-flex; gap: 7px; align-items: center; background: rgba(255,255,255,.65); padding: 7px 12px; border-radius: 999px; color: #bb7188; font-size: 11px; font-weight: 800; letter-spacing: .05em; }
+    h1 { margin: 14px 0 10px; font-size: clamp(30px, 5.4vw, 48px); line-height: 1.16; letter-spacing: -.045em; }
+    h1 em { font-style: normal; color: var(--pink-dark); }
+    .hero p { margin: 0; color: #8f727a; font-size: 14px; line-height: 1.8; }
+    .hero-art { position: absolute; width: 250px; height: 250px; right: 8%; bottom: -15px; z-index: 0; filter: drop-shadow(0 15px 17px rgba(186,116,132,.12)); }
+    .stats { display: flex; gap: 22px; margin-top: 20px; color: #a77f88; font-size: 11px; font-weight: 700; }
+    .stats b { color: #765860; font-size: 13px; margin-right: 4px; }
+    .tools { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin: 29px 0 17px; }
+    .tools h2 { margin: 0; font-size: 20px; letter-spacing: -.02em; }
+    .tools .sub { display: block; font-size: 11px; font-weight: 550; color: #aa9194; margin-top: 5px; }
+    .search { width: min(280px, 48vw); height: 42px; border: 1px solid var(--line); background: rgba(255,255,255,.76); border-radius: 999px; padding: 0 15px; outline: none; color: var(--ink); transition: border-color .2s, box-shadow .2s; }
+    .search:focus { border-color: #efb0c1; box-shadow: 0 0 0 4px rgba(238,140,169,.12); }
+    .search::placeholder { color: #b8a4a6; }
+    .categories { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding: 2px 1px 8px; margin: 0 -1px 11px; }
+    .categories::-webkit-scrollbar { display: none; }
+    .chip { border: 1px solid var(--line); background: rgba(255,255,255,.72); border-radius: 999px; white-space: nowrap; padding: 9px 15px; font-size: 12px; font-weight: 750; color: #8a7377; cursor: pointer; transition: .18s ease; }
+    .chip:hover { border-color: #f1bac9; color: var(--pink-dark); }
+    .chip.active { background: #ef8eaa; border-color: #ef8eaa; color: white; box-shadow: 0 5px 12px rgba(217,108,145,.2); }
+    .gallery { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 17px; padding-bottom: 50px; }
+    .card { min-width: 0; background: var(--paper); padding: 8px 8px 12px; border: 1px solid rgba(242,226,224,.82); border-radius: 21px; box-shadow: 0 6px 20px rgba(117,77,83,.045); cursor: pointer; transition: transform .22s ease, box-shadow .22s ease; }
+    .card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+    .thumb { aspect-ratio: 4 / 5; position: relative; overflow: hidden; border-radius: 15px; background: #fbe8eb; }
+    .thumb img { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform .45s ease; }
+    .card:hover .thumb img { transform: scale(1.045); }
+    .tag { position: absolute; left: 10px; top: 10px; border-radius: 999px; padding: 5px 9px; color: #805b64; background: rgba(255,250,248,.82); backdrop-filter: blur(8px); font-size: 10px; font-weight: 800; }
+    .heart { position: absolute; right: 9px; top: 9px; display: grid; place-items: center; width: 31px; height: 31px; border: 0; border-radius: 50%; background: rgba(255,250,248,.84); color: #d88ba0; font-size: 16px; cursor: pointer; transition: transform .15s ease; }
+    .heart:hover { transform: scale(1.1); }
+    .heart.liked { color: #e05f82; }
+    .card-meta { display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 10px 3px 0; }
+    .card-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; font-weight: 800; }
+    .card-sub { color: #b29c9f; font-size: 10px; white-space: nowrap; }
+    .empty { grid-column: 1 / -1; text-align: center; padding: 58px 10px; color: #a58e92; }
+    .empty .emoji { font-size: 36px; margin-bottom: 9px; }
+    .footer { border-top: 1px solid var(--line); padding: 22px 0 calc(24px + env(safe-area-inset-bottom)); text-align: center; color: #b49da0; font-size: 11px; line-height: 1.8; }
+    .footer strong { color: #94737b; }
+    .modal { position: fixed; inset: 0; background: rgba(52,38,43,.68); backdrop-filter: blur(9px); z-index: 20; display: none; place-items: center; padding: 20px; }
+    .modal.open { display: grid; }
+    .viewer { width: min(850px, 100%); max-height: min(90vh, 850px); border-radius: 23px; overflow: hidden; background: #fffaf8; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(245px, .8fr); box-shadow: 0 22px 80px rgba(20,10,14,.3); position: relative; }
+    .viewer-image { min-height: 320px; max-height: min(90vh, 820px); display: grid; place-items: center; background: #f3e6e7; overflow: hidden; }
+    .viewer-image img { display: block; width: 100%; height: 100%; max-height: min(90vh, 820px); object-fit: contain; }
+    .viewer-info { padding: 32px 26px; display: flex; flex-direction: column; justify-content: center; }
+    .viewer-kicker { color: #d5839b; font-size: 11px; font-weight: 850; letter-spacing: .12em; }
+    .viewer-info h3 { font-size: 24px; margin: 9px 0 8px; }
+    .viewer-info p { color: #a28c90; font-size: 12px; line-height: 1.8; margin: 0 0 22px; }
+    .download { width: 100%; text-align: center; text-decoration: none; }
+    .download-note { margin-top: 12px; text-align: center; color: #b49ea1; font-size: 10px; }
+    .close { position: absolute; top: 12px; right: 12px; z-index: 2; width: 36px; height: 36px; border: 0; border-radius: 50%; cursor: pointer; background: rgba(255,255,255,.9); font-size: 20px; color: #765b62; }
+    .dialog-backdrop { display: none; position: fixed; inset: 0; z-index: 30; background: rgba(61,43,49,.48); backdrop-filter: blur(5px); place-items: center; padding: 18px; }
+    .dialog-backdrop.open { display: grid; }
+    .add-dialog { width: min(430px, 100%); border-radius: 25px; background: #fffaf8; padding: 27px; box-shadow: 0 20px 70px rgba(49,27,34,.24); position: relative; }
+    .add-dialog h3 { margin: 0 0 6px; font-size: 21px; }
+    .add-dialog .hint { margin: 0 0 20px; color: #a48d91; font-size: 12px; line-height: 1.7; }
+    .field { display: block; margin: 13px 0; color: #816c70; font-size: 11px; font-weight: 800; }
+    .field input { display: block; width: 100%; height: 43px; margin-top: 7px; border: 1px solid #f0e2e1; border-radius: 12px; padding: 0 12px; outline: none; color: var(--ink); background: white; font-size: 13px; }
+    .field input:focus { border-color: #efa5ba; box-shadow: 0 0 0 3px rgba(238,140,169,.12); }
+    .dialog-actions { display: flex; gap: 9px; margin-top: 20px; }
+    .dialog-actions button { flex: 1; }
+    .toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom)); transform: translate(-50%, 20px); z-index: 60; opacity: 0; pointer-events: none; background: #594449; color: white; padding: 11px 17px; border-radius: 999px; font-size: 12px; box-shadow: 0 8px 25px rgba(46,24,31,.22); transition: .22s ease; white-space: nowrap; }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    @media (max-width: 860px) { .gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); } .hero-art { right: 0; opacity: .85; } }
+    @media (max-width: 620px) {
+      .shell { width: min(100% - 24px, 520px); }
+      .topbar { height: 67px; }
+      .brand-mark { width: 39px; height: 39px; border-radius: 14px; }
+      .brand-name { font-size: 15px; }
+      .brand-sub { font-size: 9px; }
+      .nav-actions { gap: 7px; }
+      .soft-button { display: none; }
+      .primary-button { padding: 10px 13px; font-size: 12px; }
+      .hero { min-height: 250px; padding: 29px 22px; border-radius: 25px; }
+      .hero-copy { max-width: 70%; }
+      .hero-art { width: 175px; height: 175px; right: -17px; bottom: -8px; opacity: .9; }
+      h1 { font-size: clamp(27px, 8vw, 37px); }
+      .hero p { font-size: 12px; }
+      .stats { gap: 12px; font-size: 9px; margin-top: 16px; }
+      .stats b { font-size: 11px; }
+      .tools { align-items: flex-end; margin-top: 24px; }
+      .tools h2 { font-size: 18px; }
+      .tools .sub { font-size: 10px; }
+      .search { width: 42px; padding: 0 12px; color: transparent; cursor: pointer; background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23a98c92' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-4-4'/%3E%3C/svg%3E") center no-repeat; }
+      .search:focus, .search:not(:placeholder-shown) { width: min(165px, 43vw); color: var(--ink); background-image: none; cursor: text; }
+      .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; padding-bottom: 35px; }
+      .card { border-radius: 17px; padding: 6px 6px 9px; }
+      .thumb { border-radius: 12px; }
+      .card-meta { padding-top: 8px; }
+      .card-title { font-size: 11px; }
+      .card-sub { font-size: 9px; }
+      .tag { left: 7px; top: 7px; padding: 4px 7px; font-size: 9px; }
+      .heart { right: 7px; top: 7px; width: 28px; height: 28px; }
+      .viewer { grid-template-columns: 1fr; max-height: 92vh; overflow-y: auto; }
+      .viewer-image { min-height: 0; height: min(56vh, 540px); }
+      .viewer-image img { max-height: 56vh; }
+      .viewer-info { padding: 18px 20px 21px; }
+      .viewer-info h3 { font-size: 20px; margin: 5px 0; }
+      .viewer-info p { margin-bottom: 13px; }
+      .download-note { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <header class="shell topbar">
+    <a class="brand" href="#top" aria-label="龙小呆壁纸收藏馆首页">
+      <span class="brand-mark" aria-hidden="true">🐲</span>
+      <span><span class="brand-name">龙小呆 · 壁纸收藏馆</span><span class="brand-sub">LITTLE DRAGON WALLPAPER CLUB</span></span>
+    </a>
+    <div class="nav-actions">
+      <button class="soft-button" id="favoritesOnly" type="button">♡ 我的收藏</button>
+    </div>
+  </header>
+
+  <main class="shell" id="top">
+    <section class="hero" aria-labelledby="heroTitle">
+      <div class="hero-copy">
+        <span class="eyebrow"><span>✿</span> 给日常一点软乎乎的可爱</span>
+        <h1 id="heroTitle">把好心情，<br /><em>装进手机里。</em></h1>
+        <p>这里收藏着一些温柔的小画面。<br />挑一张喜欢的，今天也要闪闪发光呀。</p>
+        <div class="stats"><span><b id="wallpaperCount">0</b> 张小可爱</span><span><b id="categoryCount">0</b> 个分类</span><span>♡ 随时来逛</span></div>
+      </div>
+      <svg class="hero-art" viewBox="0 0 260 260" role="img" aria-label="粉色小龙抱着爱心">
+        <defs><linearGradient id="body" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffb1c4"/><stop offset="1" stop-color="#ee88a5"/></linearGradient><linearGradient id="belly" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff4df"/><stop offset="1" stop-color="#ffe2c9"/></linearGradient></defs>
+        <ellipse cx="137" cy="230" rx="76" ry="12" fill="#de9cab" opacity=".18"/>
+        <path d="M89 95c-22-17-38-6-34 15 3 14 19 23 41 23M169 92c26-17 39-4 31 15-6 14-20 20-38 17" fill="none" stroke="#db718e" stroke-width="12" stroke-linecap="round"/>
+        <path d="M93 91c-12-15-4-28 12-25 9 2 14 11 14 20M153 85c4-18 21-21 29-9 5 8 1 18-7 26" fill="#ffc3cf" stroke="#e887a0" stroke-width="4"/>
+        <path d="M119 45c-2-13 6-23 15-24 11 0 17 10 12 22" fill="#f7a1b5" stroke="#e887a0" stroke-width="4" stroke-linecap="round"/>
+        <path d="M76 131c0-44 24-69 62-69s62 25 62 69v42c0 23-20 39-62 39s-62-16-62-39z" fill="url(#body)" stroke="#dc7894" stroke-width="4"/>
+        <path d="M91 150c4-27 20-42 47-42s43 15 47 42v26c0 17-19 28-47 28s-47-11-47-28z" fill="url(#belly)"/>
+        <ellipse cx="113" cy="105" rx="5" ry="7" fill="#61444a"/><ellipse cx="164" cy="105" rx="5" ry="7" fill="#61444a"/>
+        <circle cx="100" cy="120" r="8" fill="#f17f9d" opacity=".7"/><circle cx="177" cy="120" r="8" fill="#f17f9d" opacity=".7"/>
+        <path d="M126 120c4 5 11 5 15 0" fill="none" stroke="#9d596c" stroke-width="3" stroke-linecap="round"/>
+        <path d="M132 150c-12-11-25 6 0 24 25-18 12-35 0-24" fill="#ed89a4"/>
+        <path d="M84 179c-22-8-26 14-8 22 10 5 21 2 28-3M184 178c21-9 28 12 11 22-10 5-22 3-29-3" fill="#f3a0b3" stroke="#dc7894" stroke-width="4" stroke-linecap="round"/>
+        <path d="M102 208c-1 13-13 15-20 11M166 208c2 13 14 15 21 10" fill="none" stroke="#dc7894" stroke-width="6" stroke-linecap="round"/>
+        <path d="M75 60l4 9 10 1-8 6 2 10-8-6-9 5 4-9-7-7 10 1zM205 113l3 7 8 1-6 5 2 8-7-4-7 4 3-8-6-5 8-1z" fill="#fff"/>
+      </svg>
+    </section>
+
+    <section aria-labelledby="galleryTitle">
+      <div class="tools">
+        <div><h2 id="galleryTitle">今日份心动壁纸 <span aria-hidden="true">✧</span></h2><span class="sub">每一张，都是一颗小小的糖</span></div>
+        <input class="search" id="search" type="search" placeholder="搜一搜喜欢的…" aria-label="搜索壁纸" />
+      </div>
+      <nav class="categories" id="categories" aria-label="壁纸分类"></nav>
+      <div class="gallery" id="gallery" aria-live="polite"></div>
+    </section>
+  </main>
+  <footer class="footer"><div class="shell"><strong>龙小呆 · 壁纸收藏馆</strong><br />愿你每次点亮屏幕，都能遇见一点点喜欢 ♡</div></footer>
+
+  <div class="modal" id="viewer" role="dialog" aria-modal="true" aria-label="壁纸预览">
+    <div class="viewer">
+      <button class="close" id="closeViewer" type="button" aria-label="关闭">×</button>
+      <div class="viewer-image"><img id="largeImage" alt="壁纸大图" /></div>
+      <div class="viewer-info"><span class="viewer-kicker">A LITTLE MOMENT OF JOY</span><h3 id="largeTitle"></h3><p id="largeCategory"></p><a class="primary-button download" id="download" href="#" download>↓ 一键下载原图</a><span class="download-note">保存一份小小的好心情到你的设备</span></div>
+    </div>
+  </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // 把图片放进同目录 images 文件夹即可自动显示在原有精选壁纸前面。
+    // 目录清单可访问时会读取所有图片；普通静态托管则自动识别 image1.png、image2.jpg 等连续编号文件。
+    const seedWallpapers = [
+      { id: 'p1', title: '草莓牛奶小猫', category: '萌宠', image: 'https://images.unsplash.com/photo-1573865526739-10659fec78a5?fm=jpg&fit=max&w=2400&q=95' },
+      { id: 'p2', title: '春日花花信', category: '治愈', image: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?fm=jpg&fit=max&w=2400&q=95' },
+      { id: 'p3', title: '海盐蓝蓝日记', category: '风景', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?fm=jpg&fit=max&w=2400&q=95' },
+      { id: 'p4', title: '毛茸茸的午后', category: '萌宠', image: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?fm=jpg&fit=max&w=2400&q=95' },
+      { id: 'p5', title: '晚风和小山丘', category: '风景', image: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?fm=jpg&fit=max&w=2400&q=95' },
+      { id: 'p6', title: '郁金香软糖', category: '花花', image: 'https://images.unsplash.com/photo-1520763185298-1b434c919102?fm=jpg&fit=max&w=2400&q=95' },
+      { id: 'p7', title: '奶油云朵山', category: '治愈', image: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?fm=jpg&fit=max&w=2400&q=95' },
+      { id: 'p8', title: '迷你兔兔的春天', category: '萌宠', image: 'https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?fm=jpg&fit=max&w=2400&q=95' },
+      { id: 'p9', title: '橘子汽水海边', category: '风景', image: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?fm=jpg&fit=max&w=2400&q=95' },
+      { id: 'p10', title: '小小绿植星球', category: '花花', image: 'https://images.unsplash.com/photo-1497250681960-ef046c08a56e?fm=jpg&fit=max&w=2400&q=95' },
+      { id: 'p11', title: '月亮抱抱夜', category: '治愈', image: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?fm=jpg&fit=max&w=2400&q=95' },
+      { id: 'p12', title: '小岛慢慢游', category: '风景', image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?fm=jpg&fit=max&w=2400&q=95' }
+    ];
+    const LIKE_KEY = 'longxiaodai-likes-v1';
+    const IMAGE_EXTENSIONS = ['png', 'jpg', 'jpeg', 'webp', 'avif', 'gif', 'bmp'];
+    let localWallpapers = [];
+    let likes = new Set(readJSON(LIKE_KEY, []));
+    let activeCategory = '全部';
+    let favoritesMode = false;
+    let toastTimer;
+    const gallery = document.getElementById('gallery');
+    const categoriesEl = document.getElementById('categories');
+    const search = document.getElementById('search');
+    const viewer = document.getElementById('viewer');
+    const allWallpapers = () => [...localWallpapers, ...seedWallpapers];
+    function readJSON(key, fallback) { try { const value = JSON.parse(localStorage.getItem(key)); return Array.isArray(value) ? value : fallback; } catch { return fallback; } }
+    function saveLocal() { try { localStorage.setItem(LIKE_KEY, JSON.stringify([...likes])); } catch {} }
+    function esc(value) { return String(value).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c])); }
+    function render() {
+      const items = allWallpapers();
+      const uniqueCategories = [...new Set(items.map(item => item.category).filter(Boolean))];
+      document.getElementById('wallpaperCount').textContent = items.length;
+      document.getElementById('categoryCount').textContent = uniqueCategories.length;
+      categoriesEl.innerHTML = ['全部', ...uniqueCategories].map(category => `<button class="chip ${activeCategory === category ? 'active' : ''}" data-category="${esc(category)}" type="button">${category === '全部' ? '✿ ' : ''}${esc(category)}${category === '全部' ? ` · ${items.length}` : ''}</button>`).join('');
+      const query = search.value.trim().toLowerCase();
+      const visible = items.filter(item => (activeCategory === '全部' || item.category === activeCategory) && (!favoritesMode || likes.has(item.id)) && (!query || `${item.title} ${item.category}`.toLowerCase().includes(query)));
+      if (!visible.length) {
+        gallery.innerHTML = `<div class="empty"><div class="emoji">${favoritesMode ? '♡' : '🌷'}</div><strong>${favoritesMode ? '还没有收藏喜欢的壁纸' : '没有找到这张小可爱'}</strong><div style="margin-top:7px;font-size:12px">${favoritesMode ? '点点卡片上的小爱心，把喜欢的留起来吧。' : '换个关键词试试看吧。'}</div></div>`;
+        return;
+      }
+      gallery.innerHTML = visible.map(item => `<article class="card" data-open="${esc(item.id)}" tabindex="0" aria-label="查看${esc(item.title)}"><div class="thumb"><img src="${esc(item.image)}" alt="${esc(item.title)}" loading="lazy" /><span class="tag">${esc(item.category)}</span><button class="heart ${likes.has(item.id) ? 'liked' : ''}" type="button" data-like="${esc(item.id)}" aria-label="${likes.has(item.id) ? '取消收藏' : '收藏'}">${likes.has(item.id) ? '♥' : '♡'}</button></div><div class="card-meta"><span class="card-title">${esc(item.title)}</span><span class="card-sub">点开看看 ↗</span></div></article>`).join('');
+    }
+    function showToast(message) { const el = document.getElementById('toast'); el.textContent = message; el.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove('show'), 2200); }
+    function openViewer(id) {
+      const item = allWallpapers().find(wallpaper => wallpaper.id === id); if (!item) return;
+      document.getElementById('largeImage').src = item.image;
+      document.getElementById('largeImage').alt = item.title;
+      document.getElementById('largeTitle').textContent = item.title;
+      document.getElementById('largeCategory').textContent = `收录于「${item.category}」 · 高清原图`;
+      const download = document.getElementById('download'); download.href = item.image;
+      const extension = item.fileName ? item.fileName.split('.').pop() : (item.image.match(/\.(png|jpe?g|webp|gif|avif|bmp)(?:[?#]|$)/i)?.[1] || 'jpg');
+      download.download = `${item.title || 'longxiaodai-wallpaper'}.${extension}`;
+      viewer.classList.add('open'); document.body.style.overflow = 'hidden';
+    }
+    document.getElementById('download').addEventListener('click', async event => {
+      event.preventDefault(); const link = event.currentTarget; const source = link.href;
+      try {
+        const response = await fetch(source, { mode: 'cors' });
+        if (!response.ok) throw new Error('download failed');
+        const blob = await response.blob(); const objectURL = URL.createObjectURL(blob);
+        const temp = document.createElement('a'); temp.href = objectURL; temp.download = link.download;
+        document.body.appendChild(temp); temp.click(); temp.remove(); setTimeout(() => URL.revokeObjectURL(objectURL), 1500);
+      } catch {
+        window.open(source, '_blank', 'noopener'); showToast('图片源站不支持直接下载，已为你打开原图');
+      }
+    });
+    function closeViewer() { viewer.classList.remove('open'); document.body.style.overflow = ''; }
+    function toggleLike(id) { likes.has(id) ? likes.delete(id) : likes.add(id); saveLocal(); render(); showToast(likes.has(id) ? '收藏好啦，喜欢的要留住 ♡' : '已从收藏中移除'); }
+    document.getElementById('favoritesOnly').addEventListener('click', event => { favoritesMode = !favoritesMode; event.currentTarget.textContent = favoritesMode ? '♡ 查看全部' : '♡ 我的收藏'; render(); document.getElementById('galleryTitle').textContent = favoritesMode ? '我的心动收藏 ✧' : '今日份心动壁纸 ✧'; });
+    categoriesEl.addEventListener('click', event => { const button = event.target.closest('[data-category]'); if (button) { activeCategory = button.dataset.category; render(); } });
+    gallery.addEventListener('click', event => { const likeButton = event.target.closest('[data-like]'); if (likeButton) { event.stopPropagation(); toggleLike(likeButton.dataset.like); return; } const card = event.target.closest('[data-open]'); if (card) openViewer(card.dataset.open); });
+    gallery.addEventListener('keydown', event => { const card = event.target.closest('[data-open]'); if (card && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); openViewer(card.dataset.open); } });
+    search.addEventListener('input', render);
+    document.getElementById('closeViewer').addEventListener('click', closeViewer);
+    viewer.addEventListener('click', event => { if (event.target === viewer) closeViewer(); });
+    document.addEventListener('keydown', event => { if (event.key === 'Escape') closeViewer(); });
+
+    function imageExists(url) {
+      return new Promise(resolve => {
+        const probe = new Image();
+        probe.onload = () => resolve(true);
+        probe.onerror = () => resolve(false);
+        probe.src = url;
+      });
+    }
+    async function scanNumberedImages(folderURL) {
+      const found = []; let missingSlots = 0;
+      for (let number = 1; number <= 500; number++) {
+        const candidates = IMAGE_EXTENSIONS.map(extension => ({
+          fileName: `image${number}.${extension}`,
+          url: new URL(`image${number}.${extension}`, folderURL).href
+        }));
+        const results = await Promise.all(candidates.map(file => imageExists(file.url)));
+        const match = results.findIndex(Boolean);
+        if (match >= 0) { found.push(candidates[match]); missingSlots = 0; }
+        else if (++missingSlots >= 3) break;
+      }
+      return found;
+    }
+    async function discoverFolderWallpapers() {
+      const folderURL = new URL('images/', window.location.href);
+      let files = [];
+      try {
+        const response = await fetch(folderURL.href, { cache: 'no-store' });
+        if (response.ok) {
+          const page = new DOMParser().parseFromString(await response.text(), 'text/html');
+          files = [...page.querySelectorAll('a[href]')].map(anchor => {
+            try {
+              const url = new URL(anchor.getAttribute('href'), folderURL);
+              if (url.origin !== folderURL.origin || !url.pathname.startsWith(folderURL.pathname)) return null;
+              const fileName = decodeURIComponent(url.pathname.split('/').pop());
+              if (!/\.(png|jpe?g|webp|gif|avif|bmp)$/i.test(fileName)) return null;
+              return { fileName, url: url.href };
+            } catch { return null; }
+          }).filter(Boolean);
+        }
+      } catch { /* file:// pages and hosts without directory listings use the numbered-file fallback */ }
+      if (!files.length) files = await scanNumberedImages(folderURL);
+      const seen = new Set();
+      return files.filter(file => {
+        const key = file.fileName.toLowerCase(); if (seen.has(key)) return false; seen.add(key); return true;
+      }).sort((a, b) => a.fileName.localeCompare(b.fileName, 'zh-CN', { numeric: true, sensitivity: 'base' }))
+        .map(file => {
+          const base = file.fileName.replace(/\.[^.]+$/, '');
+          const numberedName = base.match(/^image[_-]?(\d+)$/i);
+          return { id: `local-${encodeURIComponent(file.fileName)}`, title: numberedName ? `壁纸分享 ${numberedName[1]}` : base, category: '壁纸分享', image: file.url, fileName: file.fileName };
+        });
+    }
+    render();
+    discoverFolderWallpapers().then(wallpapers => { localWallpapers = wallpapers; render(); });
+  </script>
+</body>
+</html>
+
+
+
+
